@@ -71,8 +71,7 @@
 
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM $REPO:5.0-buster-slim-amd64
-WORKDIR /app
-COPY . /app/
+
 
 ENV \
     # Unset ASPNETCORE_URLS from aspnet base image
@@ -118,6 +117,10 @@ RUN powershell_version=7.1.3 \
     && find /usr/share/powershell -print | grep -i '.*[.]nupkg$' | xargs rm
 
 # Using Debian, as root
+WORKDIR /app
+COPY . /app/
+EXPOSE 5000
 RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
 RUN apt-get install -y nodejs
 RUN dotnet build 
+ENTRYPOINT [ "dotnet", "run", "--project", "DotnetTemplate.Web" ]
