@@ -36,8 +36,7 @@ jobs:
       run: npm run test
       working-directory: ./DotnetTemplate.Web
 
-
-   - name: Build Docker Image
+    - name: Build Docker Image
       run: docker build .
 
     - name: Log in to Docker Hub
